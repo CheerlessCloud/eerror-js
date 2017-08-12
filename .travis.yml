@@ -1,0 +1,26 @@
+sudo: false
+language: node_js
+cache:
+  directories:
+    - node_modules
+node_js:
+  - '8'
+  - '7'
+  - '6'
+notifications:
+  email:
+    recipients:
+      - nnsceg@gmail.com
+    on_success: never
+    on_failure: always
+branches:
+ except:
+   - /^v\d+\.\d+\.\d+$/
+before_script:
+  - npm prune
+script:
+  - npm run build
+  - npm run cover
+after_success:
+  - npm run report-coverage
+  - npm run semantic-release

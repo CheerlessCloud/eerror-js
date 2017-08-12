@@ -1,0 +1,135 @@
+{
+  "name": "eerror",
+  "version": "0.0.0-development",
+  "description": "An error that takes additional properties in the constructor",
+  "main": "dist/index.js",
+  "repository": "git@github.com:TeslaCtroitel/eerror-js.git",
+  "author": "EnRoute <nnsceg@gmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "error",
+    "errors",
+    "extendable error"
+  ],
+  "scripts": {
+    "test": "ava",
+    "test:dev": "ava --watch",
+    "test:debug": "node --inspect --inspect-brk --require babel-register node_modules/ava/profile.js ",
+    "cover": "nyc ava",
+    "postcover": "nyc report --reporter=lcov",
+    "report-coverage": "catw coverage/lcov.info | coveralls",
+    "lint": "eslint ./src",
+    "lint:fix": "eslint --fix ./src",
+    "lint-staged": "lint-staged",
+    "prebuild": "rimraf ./dist",
+    "build": "babel src -d ./dist -s --ignore test.js",
+    "make-commit": "git-cz",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
+    "precommit": "npm t"
+  },
+  "devDependencies": {
+    "@bubltechnology/customizable-commit-analyzer": "^1.0.2-0",
+    "ava": "^0.21.0",
+    "babel-cli": "^7.0.0-alpha.19",
+    "babel-eslint": "8.0.0-alpha.17",
+    "babel-preset-env": "^2.0.0-alpha.19",
+    "babel-preset-stage-0": "^7.0.0-alpha.19",
+    "babel-register": "^7.0.0-alpha.19",
+    "catw": "^1.0.1",
+    "commitizen": "^2.9.6",
+    "coveralls": "^2.13.1",
+    "eslint": "^4.4.1",
+    "eslint-config-airbnb-base": "^11.3.1",
+    "eslint-plugin-import": "^2.6.1",
+    "husky": "^0.14.3",
+    "lint-staged": "^4.0.0",
+    "nyc": "^11.0.3",
+    "pre-commit": "^1.2.2",
+    "rimraf": "^2.6.1",
+    "semantic-release": "^6.3.6"
+  },
+  "engines": {
+    "node": ">=6.10.0"
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": "eslint-config-airbnb-base",
+    "parser": "babel-eslint",
+    "parserOptions": {
+      "sourceType": "module",
+      "allowImportExportEverywhere": false,
+      "codeFrame": false
+    },
+    "env": {
+      "node": true
+    },
+    "rules": {
+      "strict": 0,
+      "no-restricted-syntax": "off"
+    }
+  },
+  "babel": {
+    "presets": [
+      "stage-0",
+      [
+        "env",
+        {
+          "targets": {
+            "node": "6.10"
+          },
+          "useBuiltIns": false,
+          "exclude": [
+            "transform-regenerator",
+            "transform-async-to-generator"
+          ]
+        }
+      ]
+    ]
+  },
+  "ava": {
+    "files": [
+      "src/**/*.test.js",
+      "src/**/*.spec.js",
+      "test/**/*.js"
+    ],
+    "source": [
+      "src/*"
+    ],
+    "verbose": true,
+    "require": [
+      "babel-register"
+    ],
+    "babel": "inherit"
+  },
+  "release": {
+    "analyzeCommits": "@bubltechnology/customizable-commit-analyzer"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    },
+    "commitTypeMap": {
+      "feat": "minor",
+      "fix": "patch",
+      "docs": "null",
+      "style": "null",
+      "refactor": "patch",
+      "perf": "patch",
+      "test": "null",
+      "build": "patch",
+      "ci": "null",
+      "chore": "null"
+    }
+  },
+  "pre-commit": "lint-staged",
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "files": [
+    "dist/**/*.*",
+    "!dist/**/*.test.*"
+  ]
+}
