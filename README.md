@@ -14,7 +14,7 @@ An error that takes additional properties in the constructor
 [![node](https://img.shields.io/node/v/eerror.svg)]()
 [![MIT License](https://img.shields.io/npm/l/eerror.svg)]()
 
-[![NPM](https://nodei.co/npm/eerror-js.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/eerror-js/)
+[![NPM](https://nodei.co/npm/eerror.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/eerror/)
 
 In ordinary js we do that:
 ```javascript
