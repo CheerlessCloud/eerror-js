@@ -29,7 +29,7 @@
   },
   "devDependencies": {
     "@bubltechnology/customizable-commit-analyzer": "^1.0.2-0",
-    "ava": "^0.21.0",
+    "ava": "^0.22.0",
     "babel-cli": "^7.0.0-alpha.19",
     "babel-eslint": "8.0.0-alpha.17",
     "babel-preset-env": "^2.0.0-alpha.19",
