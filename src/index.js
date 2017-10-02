@@ -1,15 +1,21 @@
+import applyArgs from './apply-args';
+
 class EError extends Error {
-  constructor(message, ...args) {
-    super(message);
+  /**
+   * @description Creates an instance of EError or extends an already created error object.
+   * @param {(string|Error)} messageOrErrorObject - Message of error or extended error object.
+   * @param {...any} args - Data to be added.
+   */
+  constructor(messageOrErrorObject, ...args) {
+    if (messageOrErrorObject instanceof Error) {
+      applyArgs(messageOrErrorObject, args);
+      return messageOrErrorObject;
+    }
+
+    super(messageOrErrorObject);
     this.name = 'EError';
 
-    for (let i = 0; i < args.length; i += 1) {
-      if (typeof args[i] === 'object') {
-        Object.assign(this, args[i]);
-      } else {
-        this[`param${i + 1}`] = args[i];
-      }
-    }
+    applyArgs(this, args);
   }
 }
 

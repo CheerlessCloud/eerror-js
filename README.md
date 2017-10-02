@@ -42,5 +42,16 @@ function errored() {
   }, 'this param will be placed at "param2" property');
 }
 ```
+And this:
+```javascript
+async function tryAndCatch(user) {
+  try {
+    await user.foo();
+  } catch(error) {
+    // this call only apply params to error object and return from constructor
+    throw new EError(error, { userId: user.id })
+  }
+}
+```
 
 If you use it in NodeJS, use 'code' property for matching errors (see details in [Node.js Errors — Changes you need to know about](https://medium.com/the-node-js-collection/node-js-errors-changes-you-need-to-know-about-dc8c82417f65)).

@@ -10,3 +10,10 @@ test('eerror - smoke test', (t) => {
     t.is(error.success, true);
   });
 });
+
+test('eerror - extend error object', (t) => {
+  const error = new TypeError('Some error');
+  const eerror = new EError(error, { port: 100500 });
+  t.is(eerror.name, 'TypeError');
+  t.is(eerror.port, 100500);
+});
