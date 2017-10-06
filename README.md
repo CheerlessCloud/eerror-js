@@ -53,5 +53,15 @@ async function tryAndCatch(user) {
   }
 }
 ```
+Also you can create prepared error constructors:
+```javascript
+const MyBuisnessError = EError.prepare({ message: 'Something wen wrong', code: 42 });
+
+async function errored() {
+  if (moonPhase) {
+    throw new MyBuisnessError({ moonPhase }); // error will contain correct stacktrace, code = 42 and moonPhase value, message will be equal 'Something wen wrong'
+  }
+}
+```
 
 If you use it in NodeJS, use 'code' property for matching errors (see details in [Node.js Errors — Changes you need to know about](https://medium.com/the-node-js-collection/node-js-errors-changes-you-need-to-know-about-dc8c82417f65)).
