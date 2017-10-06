@@ -17,6 +17,21 @@ class EError extends Error {
 
     applyArgs(this, args);
   }
+
+  static prepare(params) {
+    if (typeof params !== 'object') {
+      throw new EError('Params must be object', {
+        current: params,
+        currentType: typeof params,
+      });
+    }
+
+    return class {
+      constructor(...args) {
+        return new EError(...args, params);
+      }
+    };
+  }
 }
 
 module.exports = EError;
