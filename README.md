@@ -41,6 +41,17 @@ function errored() {
     ...query,
   }, 'this param will be placed at "param2" property');
 }
+
+// or
+function errored() {
+  /// ...
+  throw new EError({
+    message: 'Entity not found',
+    code: 'NOT_FOUND',
+    status: 404,
+    query,
+  }, 'this param will be placed at "param2" property');
+}
 ```
 And this:
 ```javascript
