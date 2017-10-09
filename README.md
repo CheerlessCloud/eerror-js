@@ -39,7 +39,7 @@ function errored() {
     code: 'NOT_FOUND',
     status: 404,
     ...query,
-  }, 'this param will be placed at "param2" property');
+  }, 'this param will be placed by 0 index in array in 'additionalArgs' property');
 }
 
 // or
@@ -50,7 +50,7 @@ function errored() {
     code: 'NOT_FOUND',
     status: 404,
     query,
-  }, 'this param will be placed at "param2" property');
+  }, 'this param will be placed by 0 index in array in 'additionalArgs' property');
 }
 ```
 And this:
@@ -70,7 +70,9 @@ const MyBuisnessError = EError.prepare({ message: 'Something wen wrong', code: 4
 
 async function errored() {
   if (moonPhase) {
-    throw new MyBuisnessError({ moonPhase }); // error will contain correct stacktrace, code = 42 and moonPhase value, message will be equal 'Something wen wrong'
+    throw new MyBuisnessError({ moonPhase }); // error will contain correct stacktrace,
+    // code = 42 and moonPhase value,
+    // message will be equal 'Something wen wrong'
   }
 }
 ```

@@ -7,7 +7,7 @@ test('construct error', (t) => {
     t.true(error instanceof Error);
     t.is(typeof error.stack, 'string');
     t.is(error.message, 'Message');
-    t.is(error.param1, 'val1');
+    t.deepEqual(error.additionalArgs, ['val1']);
     t.is(error.success, true);
   });
 });

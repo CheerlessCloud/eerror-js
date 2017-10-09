@@ -5,11 +5,19 @@
  * @param {any[]} args - Data to be added.
  */
 export default function applyArgs(error, args) {
-  for (let i = 0; i < args.length; i += 1) {
-    if (typeof args[i] === 'object') {
-      Object.assign(error, args[i]);
+  const additionalArgs = args.filter((arg) => {
+    if (typeof arg !== 'object') {
+      return true;
+    }
+
+    return !Object.assign(error, arg);
+  });
+
+  if (additionalArgs.length) {
+    if (error.additionalArgs && error.additionalArgs instanceof Array) {
+      error.additionalArgs.push(...additionalArgs);
     } else {
-      error[`param${i + 1}`] = args[i];
+      error.additionalArgs = [...additionalArgs];
     }
   }
 }
