@@ -70,9 +70,13 @@ const MyBuisnessError = EError.prepare({ message: 'Something wen wrong', code: 4
 
 async function errored() {
   if (moonPhase) {
+<<<<<<< HEAD
     throw new MyBuisnessError({ moonPhase }); // error will contain correct stacktrace,
     // code = 42 and moonPhase value,
     // message will be equal 'Something wen wrong'
+=======
+    throw new MyBuisnessError({ moonPhase }); // error will contain correct stacktrace, code = 42 and moonPhase value, message will be equal 'Something wen wrong'
+>>>>>>> fa81e3e2b06ed880ff6656ee9b03aa7fa5c9afb9
   }
 }
 ```

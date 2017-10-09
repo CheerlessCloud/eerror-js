@@ -64,7 +64,7 @@ test('call constructor of prepare error without arguments', (t) => {
   });
 });
 
-test('prepare error wrapp', (t) => {
+test('prepare error wrap', (t) => {
   t.notThrows(() => {
     const typeError = new EError('', {
       name: 'TypeError',

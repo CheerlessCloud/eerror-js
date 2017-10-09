@@ -5,6 +5,10 @@
  * @param {any[]} args - Data to be added.
  */
 export default function applyArgs(error, args) {
+  if (error.additionalArgs instanceof Array) {
+    error.additionalArgs = [...error.additionalArgs];
+  }
+
   const additionalArgs = args.filter((arg) => {
     if (typeof arg !== 'object') {
       return true;
