@@ -36,9 +36,9 @@ class EError extends Error {
       });
     }
 
-    return class {
+    return class extends EError {
       constructor(...args) {
-        return new EError(...args, params);
+        super(...args, params);
       }
     };
   }

@@ -50,6 +50,23 @@ test('prepare error', (t) => {
   });
 });
 
+test('instanceof prepared error', (t) => {
+  t.notThrows(() => {
+    const Prepared = EError.prepare({
+      message: 'Prepared error',
+      name: 'SomePreparedError',
+    });
+
+    const error = new Prepared('This will be rewrite', { port: 42 });
+
+    t.true(error instanceof Prepared);
+    t.true(error instanceof EError);
+    t.is(error.name, 'SomePreparedError');
+    t.is(error.message, 'Prepared error');
+    t.is(error.port, 42);
+  });
+});
+
 test('call constructor of prepare error without arguments', (t) => {
   t.notThrows(() => {
     const Prepared = EError.prepare({
