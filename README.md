@@ -2,7 +2,7 @@
 An error that takes additional properties in the constructor
 
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
-[![Build Status](https://travis-ci.org/CheerlessCloud/eerror-js.svg?branch=master)](https://travis-ci.org/TeslaCtroitel/eerror-js)
+[![Build Status](https://travis-ci.org/CheerlessCloud/eerror-js.svg?branch=master)](https://travis-ci.org/CheerlessCloud/eerror-js)
 [![Coverage Status](https://coveralls.io/repos/github/CheerlessCloud/eerror-js/badge.svg?branch=master)](https://coveralls.io/github/CheerlessCloud/eerror-js?branch=master)
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/CheerlessCloud/eerror-js.svg)](https://greenkeeper.io/)
@@ -70,13 +70,9 @@ const MyBuisnessError = EError.prepare({ message: 'Something wen wrong', code: 4
 
 async function errored() {
   if (moonPhase) {
-<<<<<<< HEAD
     throw new MyBuisnessError({ moonPhase }); // error will contain correct stacktrace,
     // code = 42 and moonPhase value,
     // message will be equal 'Something wen wrong'
-=======
-    throw new MyBuisnessError({ moonPhase }); // error will contain correct stacktrace, code = 42 and moonPhase value, message will be equal 'Something wen wrong'
->>>>>>> fa81e3e2b06ed880ff6656ee9b03aa7fa5c9afb9
   }
 }
 ```
