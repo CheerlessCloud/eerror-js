@@ -1,46 +1,79 @@
-import applyArgs from './apply-args';
+import { merge } from './merge-options';
+import isExtendsFrom from './is-extends-from';
 
 class EError extends Error {
   /**
-   * @description Creates an instance of EError or extends an already created error object.
-   * @param {(string|Error)} param1 - Message of error or extended error object.
-   * @param {...any} args - Data to be added.
+   * @param {string?} message - Message of error.
    */
-  // eslint-disable-next-line constructor-super
-  constructor(...args) {
-    if (args.length > 0) {
-      if (args[0] instanceof Error) {
-        applyArgs(args[0], args.slice(1));
-        return args[0];
-      }
+  constructor(message) {
+    super(message);
+    this.name = this.constructor.name || 'EError';
 
-      if (typeof args[0] !== 'string') {
-        args.unshift('');
-      }
-
-      super(args[0]);
-
-      args.shift();
-
-      applyArgs(this, args);
-    } else {
-      super();
+    if (this.constructor.defaultOptions) {
+      merge(this, this.constructor.defaultOptions);
     }
   }
 
-  static prepare(params) {
-    if (typeof params !== 'object') {
-      throw new EError('Params must be object', {
-        current: params,
-        currentType: typeof params,
-      });
+  combine(options) {
+    merge(this, options);
+    return this;
+  }
+
+  wrap(error) {
+    const options = Object.getOwnPropertyNames(this)
+      .reduce((obj, key) => {
+        // eslint-disable-next-line no-param-reassign
+        obj[key] = this[key];
+        return obj;
+      }, {});
+    if (error.name) {
+      options.name = undefined;
+    }
+    options.stack = undefined;
+    return merge(error, options);
+  }
+
+  static wrap(error, options) {
+    const opts = merge(merge({}, options), this.defaultOptions || {});
+    if (error.name) {
+      opts.name = undefined;
     }
 
-    return class extends EError {
-      constructor(...args) {
-        super(...args, params);
-      }
-    };
+    return merge(error, opts);
+  }
+
+  static prepare(...args) {
+    let baseClass;
+    let options;
+    if (typeof args[0] === 'function' && (args[1] && typeof args[1] === 'object')) {
+      [baseClass, options] = args;
+    } else if (args[0] && typeof args[0] === 'object') {
+      baseClass = EError;
+      [options] = args;
+    } else {
+      throw new EError('Invalid arguments').combine({ args });
+    }
+
+    if (!isExtendsFrom(baseClass, EError)) {
+      throw new EError('Base class must be extended from EError').combine({ baseClass });
+    }
+
+    const className = (typeof options.name === 'string' && options.name.replace(/\s/g, '_')) ||
+                      `Prepared${baseClass.name}` ||
+                      'PreparedError';
+
+    const body = `return class ${className} extends ${baseClass.name} { }`;
+
+    // eslint-disable-next-line no-new-func
+    const newClass = new Function(baseClass.name, body)
+      .call(null, baseClass);
+
+    newClass.defaultOptions = merge(
+      merge({}, baseClass.defaultOptions || {}),
+      options,
+    );
+
+    return newClass;
   }
 }
 
