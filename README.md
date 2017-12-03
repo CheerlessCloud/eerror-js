@@ -13,8 +13,6 @@
 [![node](https://img.shields.io/node/v/eerror.svg)]()
 [![MIT License](https://img.shields.io/npm/l/eerror.svg)]()
 
-[![Sponsor](https://app.codesponsor.io/embed/jkPpzosXxwDBBaBNpoqWKCXd/CheerlessCloud/eerror-js.svg)](https://app.codesponsor.io/link/jkPpzosXxwDBBaBNpoqWKCXd/CheerlessCloud/eerror-js)
-
 [![NPM](https://nodei.co/npm/eerror.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/eerror/)
 
 
