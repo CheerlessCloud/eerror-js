@@ -68,6 +68,14 @@ test('static wrap error', (t) => {
   t.is(eerror.port, 100500);
 });
 
+test('static wrap error doesn\' throw error on no options', (t) => {
+  const error = new EError('Some error')
+    .combine({ name: 'TypeError', port: 100500 });
+  const wrapped = EError.wrap(error);
+  t.is(wrapped.name, 'TypeError');
+  t.is(wrapped.port, 100500);
+});
+
 test('prepare error', (t) => {
   t.notThrows(() => {
     const Prepared = EError.prepare({

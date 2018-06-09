@@ -33,7 +33,7 @@ class EError extends Error {
     return merge(error, options);
   }
 
-  static wrap(error, options) {
+  static wrap(error, options = {}) {
     const opts = merge(merge({}, options), this.defaultOptions || {});
     if (error.name) {
       opts.name = undefined;
