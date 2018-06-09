@@ -1,12 +1,17 @@
 sudo: false
 language: node_js
+
 cache:
   directories:
     - node_modules
+
 node_js:
+  - '10'
+  - '9'
   - '8'
   - '7'
   - '6'
+
 branches:
  except:
    - /^v\d+\.\d+\.\d+$/
@@ -17,4 +22,4 @@ script:
   - npm run test:cover
 after_success:
   - npm run report-coverage
-  - npm run semantic-release
+  - ./node_modules/.bin/travis-deploy-once && npm run semantic-release
