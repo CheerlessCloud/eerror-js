@@ -23,7 +23,7 @@
     "prebuild": "rimraf ./dist",
     "build": "babel src -d ./dist -s --ignore test.js",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
-    "precommit": "lint-staged && npm run test:cover"
+    "precommit": "lint-staged"
   },
   "devDependencies": {
     "@bubltechnology/customizable-commit-analyzer": "^1.0.1",
