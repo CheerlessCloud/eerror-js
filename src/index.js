@@ -1,3 +1,4 @@
+import createNamedClass from './create-named-class';
 import { merge } from './merge-options';
 import isExtendsFrom from './is-extends-from';
 
@@ -62,11 +63,8 @@ class EError extends Error {
                       `Prepared${baseClass.name}` ||
                       'PreparedError';
 
-    const body = `return class ${className} extends ${baseClass.name} { }`;
-
     // eslint-disable-next-line no-new-func
-    const newClass = new Function(baseClass.name, body)
-      .call(null, baseClass);
+    const newClass = createNamedClass(className, baseClass);
 
     newClass.defaultOptions = merge(
       merge({}, baseClass.defaultOptions || {}),
