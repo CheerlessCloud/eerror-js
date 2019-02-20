@@ -14,7 +14,7 @@
   "scripts": {
     "test": "ava",
     "test:dev": "ava --watch",
-    "test:debug": "node --inspect --inspect-brk --require babel-register node_modules/ava/profile.js ",
+    "test:debug": "node --inspect --inspect-brk --require @babel/register node_modules/ava/profile.js ",
     "test:cover": "nyc ava",
     "posttest:cover": "nyc report --reporter=lcov",
     "report-coverage": "catw coverage/lcov.info | coveralls",
@@ -26,12 +26,13 @@
     "precommit": "lint-staged"
   },
   "devDependencies": {
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/register": "^7.0.0",
     "@bubltechnology/customizable-commit-analyzer": "^1.0.1",
     "ava": "^0.25.0",
-    "babel-cli": "^6.26.0",
-    "babel-eslint": "^8.2.3",
-    "babel-preset-env": "^1.7.0",
-    "babel-register": "^6.26.0",
+    "babel-eslint": "^9.0.0",
     "catw": "^1.0.1",
     "coveralls": "^3.0.1",
     "eslint": "^4.19.1",
@@ -83,7 +84,7 @@
   "babel": {
     "presets": [
       [
-        "env",
+        "@babel/preset-env",
         {
           "targets": {
             "node": "6.10"
