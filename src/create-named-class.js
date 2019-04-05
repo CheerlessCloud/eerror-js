@@ -6,7 +6,7 @@
  * @returns {Function} - Created class.
  */
 export default function createNamedClass(className, baseClass) {
-  return ({
-    [className]: class extends baseClass { },
-  })[className];
+  return {
+    [className]: class extends baseClass {},
+  }[className];
 }
