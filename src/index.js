@@ -59,9 +59,9 @@ class EError extends Error {
       throw new EError('Base class must be extended from EError').combine({ baseClass });
     }
 
-    const className = (typeof options.name === 'string' && options.name.replace(/\s/g, '_')) ||
-                      `Prepared${baseClass.name}` ||
-                      'PreparedError';
+    const className = (typeof options.name === 'string' && options.name.replace(/\s/g, '_'))
+                      || `Prepared${baseClass.name}`
+                      || 'PreparedError';
 
     // eslint-disable-next-line no-new-func
     const newClass = createNamedClass(className, baseClass);
