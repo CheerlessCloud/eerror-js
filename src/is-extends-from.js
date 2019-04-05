@@ -6,8 +6,8 @@ function isExtendedFrom(constructor, base) {
 
   if (constructor.__proto__ === base || constructor === base) {
     return true;
-  } else if (constructor.__proto__ !== undefined &&
-             constructor.__proto__ !== null) {
+  } if (constructor.__proto__ !== undefined
+             && constructor.__proto__ !== null) {
     return isExtendedFrom(constructor.__proto__, base);
   }
 
