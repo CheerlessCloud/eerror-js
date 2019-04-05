@@ -1,64 +1,29 @@
-import test from 'ava';
 import { merge, findMaxId } from './merge-options';
 
-test('find max id', (t) => {
+test('find max id', () => {
   const obj = {
     a__old0: 'new_a',
     a__old1: 'new_a',
     a__old5: 'new_a',
   };
 
-  t.is(findMaxId(obj, 'a'), 5);
+  expect(findMaxId(obj, 'a')).toBe(5);
 });
 
-test('combine with non-object options throws error', (t) => {
+test('combine with non-object options throws error', () => {
   const target = {
     a: 'orig_a',
     b: 'orig_b',
     c: 'orig_c',
   };
 
-  t.throws(() => merge(target, null), /Options must be object/);
-  t.throws(() => merge(target, undefined), /Options must be object/);
-  t.throws(() => merge(target, () => {}), /Options must be object/);
-  t.throws(() => merge(target, [1, 2, 3]), /Options must be object/);
+  expect(() => merge(target, null)).toThrowError(/Options must be object/);
+  expect(() => merge(target, undefined)).toThrowError(/Options must be object/);
+  expect(() => merge(target, () => {})).toThrowError(/Options must be object/);
+  expect(() => merge(target, [1, 2, 3])).toThrowError(/Options must be object/);
 });
 
-test('smoke test', (t) => {
-  const target = {
-    a: 'orig_a',
-    b: 'orig_b',
-    c: 'orig_c',
-  };
-
-  const options = {
-    a: 'new_a',
-    b: 'new_b',
-    c: 'new_c',
-  };
-
-  const options2 = {
-    a: 'new_dup_a',
-    b: 'new_dup_b',
-    c: 'new_dup_c',
-  };
-
-  const merged = merge(merge(target, options), options2);
-
-  t.deepEqual(merged, {
-    a: 'new_dup_a',
-    b: 'new_dup_b',
-    c: 'new_dup_c',
-    a__old1: 'orig_a',
-    b__old1: 'orig_b',
-    c__old1: 'orig_c',
-    a__old2: 'new_a',
-    b__old2: 'new_b',
-    c__old2: 'new_c',
-  });
-});
-
-test('smoke test', (t) => {
+test('smoke test', () => {
   const target = {
     a: 'orig_a',
     b: 'orig_b',
@@ -79,7 +44,7 @@ test('smoke test', (t) => {
 
   const merged = merge(merge(target, options), options2);
 
-  t.deepEqual(merged, {
+  expect(merged).toEqual({
     a: 'new_dup_a',
     b: 'new_dup_b',
     c: 'new_dup_c',
@@ -92,7 +57,41 @@ test('smoke test', (t) => {
   });
 });
 
-test('merge with error', (t) => {
+test('smoke test', () => {
+  const target = {
+    a: 'orig_a',
+    b: 'orig_b',
+    c: 'orig_c',
+  };
+
+  const options = {
+    a: 'new_a',
+    b: 'new_b',
+    c: 'new_c',
+  };
+
+  const options2 = {
+    a: 'new_dup_a',
+    b: 'new_dup_b',
+    c: 'new_dup_c',
+  };
+
+  const merged = merge(merge(target, options), options2);
+
+  expect(merged).toEqual({
+    a: 'new_dup_a',
+    b: 'new_dup_b',
+    c: 'new_dup_c',
+    a__old1: 'orig_a',
+    b__old1: 'orig_b',
+    c__old1: 'orig_c',
+    a__old2: 'new_a',
+    b__old2: 'new_b',
+    c__old2: 'new_c',
+  });
+});
+
+test('merge with error', () => {
   const target = {
     a: 'orig_a',
     b: 'orig_b',
@@ -104,7 +103,7 @@ test('merge with error', (t) => {
 
   const merged = merge(target, options);
 
-  t.deepEqual(merged, {
+  expect(merged).toEqual({
     a: 'orig_a',
     b: 'orig_b',
     c: 'orig_c',
@@ -112,11 +111,11 @@ test('merge with error', (t) => {
   });
 });
 
-test('merge object with getters/setters', (t) => {
+test('merge object with getters/setters', (done) => {
   const target = {
     get a() { return 'orig_a'; },
     get b() { return 'old_b_value_from_getter'; },
-    set b(value) { t.fail('setter must be replaced'); },
+    set b(value) { done.fail('setter must be replaced'); },
   };
 
   const options = {
@@ -124,19 +123,21 @@ test('merge object with getters/setters', (t) => {
     b: 'new_b',
   };
 
-  t.notThrows(() => {
+  expect(() => {
     const merged = merge(target, options);
 
-    t.deepEqual(merged, {
+    expect(merged).toEqual({
       a: 'new_a',
       b: 'new_b',
       a__old1: 'orig_a',
       b__old1: 'old_b_value_from_getter',
     });
-  });
+  }).not.toThrow();
+
+  done();
 });
 
-test('don\'t merge undefined properties', (t) => {
+test('don\'t merge undefined properties', () => {
   const target = {
     a: 'orig_a',
     b: 'orig_b',
@@ -148,14 +149,14 @@ test('don\'t merge undefined properties', (t) => {
     b: undefined,
   };
 
-  t.notThrows(() => {
+  expect(() => {
     const merged = merge(target, options);
 
-    t.deepEqual(merged, {
+    expect(merged).toEqual({
       a: 'new_a',
       b: 'orig_b',
       c: 'orig_c',
       a__old1: 'orig_a',
     });
-  });
+  }).not.toThrow();
 });

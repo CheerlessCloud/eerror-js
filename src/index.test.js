@@ -1,83 +1,82 @@
-import test from 'ava';
 import EError from './index';
 
-test('construct error and combine', (t) => {
-  t.notThrows(() => {
+test('construct error and combine', () => {
+  expect(() => {
     const error = new EError('ErrMessage').combine({ success: false });
-    t.true(error instanceof Error);
-    t.true(error instanceof EError);
-    t.is(typeof error.stack, 'string');
-    t.is(error.message, 'ErrMessage');
-    t.is(error.success, false);
-  });
+    expect(error instanceof Error).toBe(true);
+    expect(error instanceof EError).toBe(true);
+    expect(typeof error.stack).toBe('string');
+    expect(error.message).toBe('ErrMessage');
+    expect(error.success).toBe(false);
+  }).not.toThrow();
 });
 
-test('construct error without message argument', (t) => {
-  t.notThrows(() => {
+test('construct error without message argument', () => {
+  expect(() => {
     const error = new EError().combine({ success: false });
-    t.true(error instanceof Error);
-    t.true(error instanceof EError);
-    t.is(typeof error.stack, 'string');
-    t.is(error.message, '');
-    t.is(error.success, false);
+    expect(error instanceof Error).toBe(true);
+    expect(error instanceof EError).toBe(true);
+    expect(typeof error.stack).toBe('string');
+    expect(error.message).toBe('');
+    expect(error.success).toBe(false);
 
     const error2 = new EError();
-    t.true(error2 instanceof Error);
-    t.true(error2 instanceof EError);
-    t.is(typeof error2.stack, 'string');
-    t.is(error2.message, '');
-    t.is(error2.success, undefined);
-  });
+    expect(error2 instanceof Error).toBe(true);
+    expect(error2 instanceof EError).toBe(true);
+    expect(typeof error2.stack).toBe('string');
+    expect(error2.message).toBe('');
+    expect(error2.success).toBe(undefined);
+  }).not.toThrow();
 });
 
-test('combine error with error', (t) => {
-  t.notThrows(() => {
+test('combine error with error', () => {
+  expect(() => {
     const err1 = new EError('SomeMessage').combine({ success: false });
     const error = new EError('ErrMessage').combine(err1);
-    t.true(error instanceof Error);
-    t.true(error instanceof EError);
-    t.is(typeof error.stack, 'string');
-    t.is(error.message, 'ErrMessage');
-    t.is(error.success, undefined);
-    t.is(error.error, err1);
-    t.is(error.error.success, err1.success);
-  });
+    expect(error instanceof Error).toBe(true);
+    expect(error instanceof EError).toBe(true);
+    expect(typeof error.stack).toBe('string');
+    expect(error.message).toBe('ErrMessage');
+    expect(error.success).toBe(undefined);
+    expect(error.error).toBe(err1);
+    expect(error.error.success).toBe(err1.success);
+  }).not.toThrow();
 });
 
-test('error name getted from class name', (t) => {
+test('error name getted from class name', () => {
   class MyError extends EError { }
 
-  t.is((new MyError()).name, 'MyError');
+  expect((new MyError()).name).toBe('MyError');
 });
 
-test('wrap error from instance', (t) => {
+test('wrap error from instance', () => {
   const eerror = new EError('Some error').combine({ port: 80, code: 'USED' });
   const typeError = new TypeError();
   const wrapped = eerror.wrap(typeError);
-  t.is(wrapped.name, typeError.name);
-  t.is(wrapped.stack, typeError.stack);
-  t.is(wrapped.message, 'Some error');
-  t.is(wrapped.port, 80);
-  t.is(wrapped.code, 'USED');
+  expect(wrapped.name).toBe(typeError.name);
+  expect(wrapped.stack).toBe(typeError.stack);
+  expect(wrapped.message).toBe('Some error');
+  expect(wrapped.port).toBe(80);
+  expect(wrapped.code).toBe('USED');
 });
 
-test('static wrap error', (t) => {
+test('static wrap error', () => {
   const error = new TypeError('Some error');
   const eerror = EError.wrap(error, { port: 100500 });
-  t.is(eerror.name, 'TypeError');
-  t.is(eerror.port, 100500);
+  expect(eerror.name).toBe('TypeError');
+  expect(eerror.port).toBe(100500);
 });
 
-test('static wrap error doesn\' throw error on no options', (t) => {
+test('static wrap error doesn\' throw error on no options', () => {
   const error = new EError('Some error')
     .combine({ name: 'TypeError', port: 100500 });
   const wrapped = EError.wrap(error);
-  t.is(wrapped.name, 'TypeError');
-  t.is(wrapped.port, 100500);
+  expect(wrapped.name).toBe('TypeError');
+  expect(wrapped.port).toBe(100500);
 });
 
-test('prepare error', (t) => {
-  t.notThrows(() => {
+test('prepare error', () => {
+  expect(() => {
     const Prepared = EError.prepare({
       message: 'Prepared error',
       name: 'SomePreparedError',
@@ -85,14 +84,14 @@ test('prepare error', (t) => {
 
     const error = new Prepared('This will be rewrite').combine({ port: 42 });
 
-    t.is(error.name, 'SomePreparedError');
-    t.is(error.message, 'Prepared error');
-    t.is(error.port, 42);
-  });
+    expect(error.name).toBe('SomePreparedError');
+    expect(error.message).toBe('Prepared error');
+    expect(error.port).toBe(42);
+  }).not.toThrow();
 });
 
-test('prepared error by default instanceof EError', (t) => {
-  t.notThrows(() => {
+test('prepared error by default instanceof EError', () => {
+  expect(() => {
     const Prepared = EError.prepare({
       message: 'Prepared error',
       name: 'SomePreparedError',
@@ -100,15 +99,15 @@ test('prepared error by default instanceof EError', (t) => {
 
     const error = new Prepared('This will be rewrite').combine({ port: 42 });
 
-    t.true(error instanceof Prepared);
-    t.true(error instanceof EError);
-    t.is(error.name, 'SomePreparedError');
-    t.is(error.message, 'Prepared error');
-    t.is(error.port, 42);
-  });
+    expect(error instanceof Prepared).toBe(true);
+    expect(error instanceof EError).toBe(true);
+    expect(error.name).toBe('SomePreparedError');
+    expect(error.message).toBe('Prepared error');
+    expect(error.port).toBe(42);
+  }).not.toThrow();
 });
 
-test('prepared error can extends of other error constructor', (t) => {
+test('prepared error can extends of other error constructor', () => {
   class NewBaseError extends EError {}
 
   const Prepared = EError.prepare(NewBaseError, {
@@ -118,35 +117,35 @@ test('prepared error can extends of other error constructor', (t) => {
 
   const error = new Prepared('This will be rewrite').combine({ port: 42 });
 
-  t.true(error instanceof Prepared);
-  t.true(error instanceof NewBaseError);
-  t.true(error instanceof EError);
-  t.is(error.name, 'SomePreparedError');
-  t.is(error.message, 'Prepared error');
-  t.is(error.port, 42);
+  expect(error instanceof Prepared).toBe(true);
+  expect(error instanceof NewBaseError).toBe(true);
+  expect(error instanceof EError).toBe(true);
+  expect(error.name).toBe('SomePreparedError');
+  expect(error.message).toBe('Prepared error');
+  expect(error.port).toBe(42);
 });
 
-test('prepared error can extends only from child of EError', (t) => {
+test('prepared error can extends only from child of EError', () => {
   class NewBaseError extends Error {}
 
-  t.throws(() => {
+  expect(() => {
     EError.prepare(NewBaseError, {
       message: 'Prepared error',
       name: 'SomePreparedError',
     });
-  }, /Base class must be extended from EError/i, 'Base class must be extended from EError');
+  }).toThrowError(/Base class must be extended from EError/i);
 });
 
-test('prepare method throws error on invalid arguments', (t) => {
+test('prepare method throws error on invalid arguments', () => {
   class NewBaseError extends Error {}
 
-  t.throws(() => {
+  expect(() => {
     EError.prepare(NewBaseError);
-  }, /Invalid arguments/i);
+  }).toThrowError(/Invalid arguments/i);
 });
 
-test('call constructor of prepared error without arguments', (t) => {
-  t.notThrows(() => {
+test('call constructor of prepared error without arguments', () => {
+  expect(() => {
     const Prepared = EError.prepare({
       message: 'Prepared error',
       name: 'SomePreparedError',
@@ -154,13 +153,13 @@ test('call constructor of prepared error without arguments', (t) => {
 
     const error = new Prepared();
 
-    t.is(error.name, 'SomePreparedError');
-    t.is(error.message, 'Prepared error');
-  });
+    expect(error.name).toBe('SomePreparedError');
+    expect(error.message).toBe('Prepared error');
+  }).not.toThrow();
 });
 
-test('prepared error instance wrap', (t) => {
-  t.notThrows(() => {
+test('prepared error instance wrap', () => {
+  expect(() => {
     const typeError = new EError().combine({
       name: 'PortError',
       port: 46,
@@ -174,15 +173,15 @@ test('prepared error instance wrap', (t) => {
 
     const error = new Prepared().wrap(typeError);
 
-    t.is(error.name, 'PortError');
-    t.is(error.message, 'Prepared error');
-    t.is(error.port, 46);
-    t.is(error.type, 'number');
-  });
+    expect(error.name).toBe('PortError');
+    expect(error.message).toBe('Prepared error');
+    expect(error.port).toBe(46);
+    expect(error.type).toBe('number');
+  }).not.toThrow();
 });
 
-test('prepared error static wrap', (t) => {
-  t.notThrows(() => {
+test('prepared error static wrap', () => {
+  expect(() => {
     const portError = new EError().combine({
       name: 'PortError',
       port: 46,
@@ -196,10 +195,10 @@ test('prepared error static wrap', (t) => {
 
     const error = Prepared.wrap(portError, { port: 42 });
 
-    t.is(error.name, portError.name);
-    t.is(error.stack, portError.stack);
-    t.is(error.message, 'Prepared error');
-    t.is(error.port, 42);
-    t.is(error.type, 'number');
-  });
+    expect(error.name).toBe(portError.name);
+    expect(error.stack).toBe(portError.stack);
+    expect(error.message).toBe('Prepared error');
+    expect(error.port).toBe(42);
+    expect(error.type).toBe('number');
+  }).not.toThrow();
 });
