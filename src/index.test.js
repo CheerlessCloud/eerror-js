@@ -44,9 +44,9 @@ test('combine error with error', () => {
 });
 
 test('error name getted from class name', () => {
-  class MyError extends EError { }
+  class MyError extends EError {}
 
-  expect((new MyError()).name).toBe('MyError');
+  expect(new MyError().name).toBe('MyError');
 });
 
 test('wrap error from instance', () => {
@@ -67,9 +67,8 @@ test('static wrap error', () => {
   expect(eerror.port).toBe(100500);
 });
 
-test('static wrap error doesn\' throw error on no options', () => {
-  const error = new EError('Some error')
-    .combine({ name: 'TypeError', port: 100500 });
+test("static wrap error doesn' throw error on no options", () => {
+  const error = new EError('Some error').combine({ name: 'TypeError', port: 100500 });
   const wrapped = EError.wrap(error);
   expect(wrapped.name).toBe('TypeError');
   expect(wrapped.port).toBe(100500);

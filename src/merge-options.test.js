@@ -111,11 +111,17 @@ test('merge with error', () => {
   });
 });
 
-test('merge object with getters/setters', (done) => {
+test('merge object with getters/setters', done => {
   const target = {
-    get a() { return 'orig_a'; },
-    get b() { return 'old_b_value_from_getter'; },
-    set b(value) { done.fail('setter must be replaced'); },
+    get a() {
+      return 'orig_a';
+    },
+    get b() {
+      return 'old_b_value_from_getter';
+    },
+    set b(value) {
+      done.fail('setter must be replaced');
+    },
   };
 
   const options = {
@@ -137,7 +143,7 @@ test('merge object with getters/setters', (done) => {
   done();
 });
 
-test('don\'t merge undefined properties', () => {
+test("don't merge undefined properties", () => {
   const target = {
     a: 'orig_a',
     b: 'orig_b',

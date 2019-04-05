@@ -21,12 +21,11 @@ class EError extends Error {
   }
 
   wrap(error) {
-    const options = Object.getOwnPropertyNames(this)
-      .reduce((obj, key) => {
-        // eslint-disable-next-line no-param-reassign
-        obj[key] = this[key];
-        return obj;
-      }, {});
+    const options = Object.getOwnPropertyNames(this).reduce((obj, key) => {
+      // eslint-disable-next-line no-param-reassign
+      obj[key] = this[key];
+      return obj;
+    }, {});
     if (error.name) {
       options.name = undefined;
     }
@@ -59,17 +58,15 @@ class EError extends Error {
       throw new EError('Base class must be extended from EError').combine({ baseClass });
     }
 
-    const className = (typeof options.name === 'string' && options.name.replace(/\s/g, '_'))
-                      || `Prepared${baseClass.name}`
-                      || 'PreparedError';
+    const className =
+      (typeof options.name === 'string' && options.name.replace(/\s/g, '_')) ||
+      `Prepared${baseClass.name}` ||
+      'PreparedError';
 
     // eslint-disable-next-line no-new-func
     const newClass = createNamedClass(className, baseClass);
 
-    newClass.defaultOptions = merge(
-      merge({}, baseClass.defaultOptions || {}),
-      options,
-    );
+    newClass.defaultOptions = merge(merge({}, baseClass.defaultOptions || {}), options);
 
     return newClass;
   }
