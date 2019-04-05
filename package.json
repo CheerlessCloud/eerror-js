@@ -21,7 +21,6 @@
     "lint:format": "prettier --write \"src/**/*.js\"",
     "prebuild": "rimraf ./dist",
     "build": "babel src -d ./dist -s --ignore test.js",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "precommit": "lint-staged"
   },
   "devDependencies": {
@@ -69,23 +68,37 @@
     ]
   },
   "release": {
-    "analyzeCommits": "@bubltechnology/customizable-commit-analyzer"
-  },
-  "config": {
-    "commitizen": {
-      "path": "cz-conventional-changelog"
-    },
-    "commitTypeMap": {
-      "feat": "minor",
-      "fix": "patch",
-      "docs": "null",
-      "style": "null",
-      "refactor": "patch",
-      "perf": "patch",
-      "test": "null",
-      "build": "patch",
-      "ci": "null",
-      "chore": "null"
+    "analyzeCommits": {
+      "preset": "angular",
+      "releaseRules": [
+        {
+          "type": "feat",
+          "release": "minor"
+        },
+        {
+          "type": "fix",
+          "release": "patch"
+        },
+        {
+          "type": "docs",
+          "scope": "/readme/",
+          "release": "patch"
+        },
+        {
+          "type": "perf",
+          "release": "patch"
+        },
+        {
+          "type": "build",
+          "release": "patch"
+        }
+      ],
+      "parserOpts": {
+        "noteKeywords": [
+          "BREAKING CHANGE",
+          "BREAKING CHANGES"
+        ]
+      }
     }
   },
   "lint-staged": {
