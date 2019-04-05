@@ -17,10 +17,16 @@ test('combine with non-object options throws error', () => {
     c: 'orig_c',
   };
 
-  expect(() => merge(target, null)).toThrowError(/Options must be object/);
-  expect(() => merge(target, undefined)).toThrowError(/Options must be object/);
-  expect(() => merge(target, () => {})).toThrowError(/Options must be object/);
-  expect(() => merge(target, [1, 2, 3])).toThrowError(/Options must be object/);
+  expect(() => merge(target, null)).toThrowErrorMatchingInlineSnapshot(`"Options must be object"`);
+  expect(() => merge(target, undefined)).toThrowErrorMatchingInlineSnapshot(
+    `"Options must be object"`,
+  );
+  expect(() => merge(target, () => {})).toThrowErrorMatchingInlineSnapshot(
+    `"Options must be object"`,
+  );
+  expect(() => merge(target, [1, 2, 3])).toThrowErrorMatchingInlineSnapshot(
+    `"Options must be object"`,
+  );
 });
 
 test('smoke test', () => {
@@ -165,4 +171,20 @@ test("don't merge undefined properties", () => {
       a__old1: 'orig_a',
     });
   }).not.toThrow();
+});
+
+test('should throw error when target not object', () => {
+  const options = {
+    a: 'new_a',
+  };
+
+  expect(() => merge(undefined, options)).toThrowErrorMatchingInlineSnapshot(
+    `"Target must be object"`,
+  );
+
+  expect(() => merge(null, options)).toThrowErrorMatchingInlineSnapshot(`"Target must be object"`);
+
+  expect(() => merge('string', options)).toThrowErrorMatchingInlineSnapshot(
+    `"Target must be object"`,
+  );
 });
