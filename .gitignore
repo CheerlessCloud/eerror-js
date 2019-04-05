@@ -55,3 +55,7 @@ typings/
 
 # Dist
 dist
+
+# VsCode and WebStorm
+.idea
+.vscode
