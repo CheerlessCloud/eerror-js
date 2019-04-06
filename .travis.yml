@@ -22,4 +22,4 @@ script:
   - npm run test:cover
 after_success:
   - npm run report-coverage
-  - ./node_modules/.bin/travis-deploy-once && npm run semantic-release
+  - ./node_modules/.bin/travis-deploy-once && ./node_modules/.bin/semantic-release
