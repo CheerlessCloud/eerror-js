@@ -1,3 +1,4 @@
+/* eslint-disable max-classes-per-file */
 import EError from './index';
 
 test('construct error and combine', () => {
