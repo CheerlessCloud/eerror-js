@@ -69,6 +69,14 @@
       "preset": "angular",
       "releaseRules": [
         {
+          "breaking": true,
+          "release": "major"
+        },
+        {
+          "revert": true,
+          "release": "patch"
+        },
+        {
           "type": "feat",
           "release": "minor"
         },
@@ -89,13 +97,7 @@
           "type": "build",
           "release": "patch"
         }
-      ],
-      "parserOpts": {
-        "noteKeywords": [
-          "BREAKING CHANGE",
-          "BREAKING CHANGES"
-        ]
-      }
+      ]
     }
   },
   "husky": {
