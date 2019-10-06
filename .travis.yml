@@ -13,11 +13,12 @@ node_js:
 branches:
  except:
    - /^v\d+\.\d+\.\d+$/
+
 before_script:
   - npm prune
 script:
   - npm run build
   - npm run test:cover
 after_success:
-  - npm run report-coverage
+  - cat coverage/lcov.info | ./node_modules/.bin/coveralls
   - ./node_modules/.bin/travis-deploy-once && ./node_modules/.bin/semantic-release
