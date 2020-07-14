@@ -45,7 +45,7 @@ class EError extends Error {
   static prepare(...args) {
     let baseClass;
     let options;
-    if (typeof args[0] === 'function' && (args[1] && typeof args[1] === 'object')) {
+    if (typeof args[0] === 'function' && args[1] && typeof args[1] === 'object') {
       [baseClass, options] = args;
     } else if (args[0] && typeof args[0] === 'object') {
       baseClass = EError;
