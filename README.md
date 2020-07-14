@@ -1,17 +1,16 @@
 # EError
-> An error that can easily combine with additional data
-
-[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
-[![Build Status](https://travis-ci.org/CheerlessCloud/eerror-js.svg?branch=master)](https://travis-ci.org/CheerlessCloud/eerror-js)
-[![Coverage Status](https://coveralls.io/repos/github/CheerlessCloud/eerror-js/badge.svg?branch=master)](https://coveralls.io/github/CheerlessCloud/eerror-js?branch=master)
-
-[![Greenkeeper badge](https://badges.greenkeeper.io/CheerlessCloud/eerror-js.svg)](https://greenkeeper.io/)
-[![dependencies Status](https://david-dm.org/CheerlessCloud/eerror-js/status.svg)](https://david-dm.org/CheerlessCloud/eerror-js)
-[![devDependencies Status](https://david-dm.org/CheerlessCloud/eerror-js/dev-status.svg)](https://david-dm.org/CheerlessCloud/eerror-js?type=dev)
+> An error that can easily combine with additional context data
 
 [![npm](https://img.shields.io/npm/v/eerror.svg)]()
 [![node](https://img.shields.io/node/v/eerror.svg)]()
 [![MIT License](https://img.shields.io/npm/l/eerror.svg)]()
+
+[![Package size](https://img.shields.io/bundlephobia/minzip/eerror)](https://github.com/CheerlessCloud/eerror-js)
+[![dependencies Status](https://david-dm.org/CheerlessCloud/eerror-js/status.svg)](https://david-dm.org/CheerlessCloud/eerror-js)
+
+[![Build Status](https://travis-ci.org/CheerlessCloud/eerror-js.svg?branch=master)](https://travis-ci.org/CheerlessCloud/eerror-js)
+[![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
+[![Coverage Status](https://coveralls.io/repos/github/CheerlessCloud/eerror-js/badge.svg?branch=master)](https://coveralls.io/github/CheerlessCloud/eerror-js?branch=master)
 
 [![NPM](https://nodei.co/npm/eerror.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/eerror/)
 
