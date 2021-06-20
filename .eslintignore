@@ -12,3 +12,4 @@ typings/
 dist
 .idea/
 .vscode/
+index.d.ts
